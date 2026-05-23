@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Học Từ Vựng Tiếng Anh Lớp 8</title>
+    
+    <!-- Premium Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>Global Success 8</h1>
+            <div class="header-action">
+                <!-- Theme Toggle / Info Button can go here -->
+            </div>
+        </header>
+
+        <!-- Setup Screen -->
+        <div id="screen-setup" class="glass-card">
+            <h2>Cấu hình học tập</h2>
+
+            <!-- Student Name Input -->
+            <div class="form-group">
+                <label for="student-name">Tên học sinh:</label>
+                <input type="text" id="student-name" placeholder="Nhập tên của em..." style="width: 100%; padding: 12px; border-radius: 12px; border: 1px solid var(--border-color); background: rgba(255,255,255,0.03); color: var(--text-primary); font-family: var(--font-body); font-size: 1rem; margin-top: 4px; outline: none; transition: var(--transition);">
+            </div>
+            
+            <!-- Unit Selection -->
+            <div class="form-group">
+                <label>Chọn Unit (Có thể chọn nhiều):</label>
+                <div class="unit-grid" id="unit-selection-container">
+                    <!-- Javascript will dynamically build this list -->
+                </div>
+            </div>
+
+            <!-- Mode Selection -->
+            <div class="form-group">
+                <label>Phương pháp học:</label>
+                <div class="select-btn-group" style="grid-template-columns: 1fr 1fr;">
+                    <button class="select-btn active" data-mode="flashcards">Flashcard</button>
+                    <button class="select-btn" data-mode="quiz">Trắc nghiệm</button>
+                </div>
+            </div>
+
+            <!-- Limit Selection -->
+            <div class="form-group">
+                <label>Số lượng từ vựng:</label>
+                <div class="select-btn-group" id="limit-btn-group">
+                    <button class="select-btn active" data-limit="5">5 từ</button>
+                    <button class="select-btn" data-limit="10">10 từ</button>
+                    <button class="select-btn" data-limit="20">20 từ</button>
+                    <button class="select-btn" data-limit="40">40 từ</button>
+                </div>
+            </div>
+
+            <!-- Start Button -->
+            <button class="btn-primary" id="btn-start" style="margin-top: 12px;">Bắt Đầu Học</button>
+        </div>
+
+        <!-- Flashcards Screen -->
+        <div id="screen-flashcards" class="hidden">
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-header">
+                    <span id="fc-progress-text">Từ 1 / 5</span>
+                    <span id="fc-percentage">0%</span>
+                </div>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" id="fc-progress-fill"></div>
+                </div>
+            </div>
+
+            <!-- Card Element (3D Flip) -->
+            <div class="card-container" id="vocab-card">
+                <div class="card-inner">
+                    <!-- Front Side -->
+                    <div class="card-front">
+                        <div class="badge-pos" id="fc-pos">Noun</div>
+                        <div class="word-title" id="fc-word">Leisure</div>
+                        <div class="pron-badge">
+                            <span id="fc-pron">/ˈleʒə(r)/</span>
+                            <button class="audio-btn" id="btn-speak" title="Phát âm">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                                </svg>
+                            </button>
+                        </div>
+                        <div style="font-size: 0.8rem; color: var(--text-secondary); opacity: 0.7; margin-top: 20px;">
+                            (Chạm để lật xem nghĩa)
+                        </div>
+                    </div>
+
+                    <!-- Back Side -->
+                    <div class="card-back">
+                        <div class="detail-section">
+                            <div class="label-title">Nghĩa của từ</div>
+                            <div class="val-meaning" id="fc-meaning">Thời gian rảnh rỗi</div>
+                        </div>
+                        <div class="detail-section">
+                            <div class="label-title">Cách sử dụng</div>
+                            <div class="val-usage" id="fc-usage">Thường đi sau các giới từ như 'in'...</div>
+                        </div>
+                        <div class="detail-section">
+                            <div class="label-title" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                                <span>Ví dụ minh họa</span>
+                                <button class="audio-btn" id="btn-speak-example" title="Phát âm ví dụ" style="width: 32px; height: 32px; min-width: 32px; font-size: 0.8rem; margin: 0;">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="val-example" id="fc-example">In my leisure time, I like to make cookies.</div>
+                            <div class="val-translation" id="fc-translation">Trong thời gian rảnh rỗi, tôi thích làm bánh quy.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Review Actions -->
+            <div class="review-actions" style="margin-top: 20px;">
+                <button class="btn-review btn-red" id="btn-review-again">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                    Chưa thuộc
+                </button>
+                <button class="btn-review btn-green" id="btn-review-known">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                    Đã thuộc
+                </button>
+            </div>
+
+            <button class="select-btn" id="btn-fc-quit" style="margin-top: 16px; width: 100%;">
+                Quay lại thiết lập
+            </button>
+        </div>
+
+        <!-- Quiz Screen -->
+        <div id="screen-quiz" class="hidden">
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-header">
+                    <span id="quiz-progress-text">Câu hỏi 1 / 5</span>
+                    <span id="quiz-percentage">0%</span>
+                </div>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" id="quiz-progress-fill"></div>
+                </div>
+            </div>
+
+            <!-- Question Box -->
+            <div class="glass-card quiz-question-container" style="margin-bottom: 12px;">
+                <div class="badge-pos" id="quiz-pos">Noun</div>
+                <div class="quiz-question-word" id="quiz-question-word">Leisure</div>
+                <div class="quiz-question-desc" id="quiz-question-desc">Chọn nghĩa đúng của từ trên:</div>
+            </div>
+
+            <!-- Options Grid -->
+            <div class="quiz-options" id="quiz-options-container">
+                <!-- Javascript will load 4 button choices here -->
+            </div>
+
+            <button class="select-btn" id="btn-quiz-quit" style="margin-top: 24px; width: 100%;">
+                Quay lại thiết lập
+            </button>
+        </div>
+
+        <!-- Result/Summary Screen -->
+        <div id="screen-result" class="glass-card hidden">
+            <h2 style="text-align: center; font-size: 1.6rem; color: var(--accent-color);">Kết quả học tập</h2>
+            <div id="res-student-name" style="text-align: center; font-size: 1rem; opacity: 0.8; margin-top: -8px; margin-bottom: 4px; font-weight: 600;">Học sinh: </div>
+            <div id="res-time-details" style="text-align: center; font-size: 0.85rem; opacity: 0.7; margin-bottom: 16px; line-height: 1.4;">
+                <div id="res-submit-time">Thời điểm nộp: </div>
+                <div id="res-duration">Thời lượng làm bài: </div>
+            </div>
+            
+            <div class="result-stats">
+                <div class="stat-box">
+                    <div class="stat-val" id="res-total-known">0</div>
+                    <div class="stat-lbl">Đã thuộc</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-val" id="res-total-review" style="color: var(--error-color);">0</div>
+                    <div class="stat-lbl">Cần ôn lại</div>
+                </div>
+            </div>
+
+            <div class="progress-container" style="margin: 16px 0;">
+                <div class="progress-header">
+                    <span>Mức độ hoàn thành</span>
+                    <strong id="res-score-pct" style="color: var(--success-color);">0%</strong>
+                </div>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" id="res-progress-fill"></div>
+                </div>
+            </div>
+
+            <!-- Word feedback list -->
+            <label class="label-title">Chi tiết các từ vừa học:</label>
+            <div class="result-list" id="result-word-list">
+                <!-- Javascript will list words here with check or cross -->
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 20px;">
+                <button class="btn-primary" id="btn-restart">Luyện Tập Lại</button>
+                <button class="select-btn" id="btn-result-home" style="width: 100%;">Thiết Lập Mới</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- DB and Script -->
+    <script src="vocabulary_db.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
